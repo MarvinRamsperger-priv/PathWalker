@@ -27,13 +27,12 @@ PathWalker can load target URLs from Burp's sitemap. To support authenticated te
 ## Features
 
 * **Dedicated scanning UI:** Select a host, review sitemap URLs, edit session material, and launch on-demand scans from the PathWalker tab.
-* **Directory-aware path walking:** Tests path traversal payloads from each parent directory in a URL path, while de-duplicating equivalent requests.
+* **Directory-aware path walking:** Starts from each discovered endpoint and walks up through every parent directory, injecting traversal payloads at each path level while de-duplicating equivalent requests.
 * **GET-parameter testing:** Replaces GET parameter values with direct file and traversal payload variants.
 * **Payload generation:** Covers common Linux and Windows target files with URL-encoded, double-encoded, backslash, and non-standard traversal variants.
 * **High-confidence detection:** Looks for known `/etc/passwd` and Windows `system.ini` signatures to reduce false positives.
 * **Session assistance:** Loads recent cookies and JWT Bearer tokens for the selected host from Burp Proxy history. Values remain editable before scanning.
 * **Burp integration:** Uses Burp's networking APIs and registers confirmed findings as Burp sitemap issues.
-* **Large-project safeguards:** Caps sitemap, proxy-history, loaded URL, scan target, response, and log processing to keep Burp responsive.
 
 ---
 
