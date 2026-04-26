@@ -1,12 +1,28 @@
+<div align="center">
+
 # PathWalker LFI Scanner
+
+![Java 17](https://img.shields.io/badge/Java-17-007396)
+![Burp Montoya](https://img.shields.io/badge/Burp%20Montoya-Extension-ff6633)
+![Version](https://img.shields.io/badge/version-1.3.0-blue)
+
+</div>
 
 PathWalker is a Burp Suite Montoya extension for finding Local File Inclusion (LFI) and path traversal issues from URLs already discovered in Burp.
 
+<p align="center">
+  <img src="pathwalker.png" alt="PathWalker Burp Suite extension screenshot" width="100%">
+</p>
+
+---
+
 ## Unique Use Case
 
-Most LFI testing workflows focus on injecting payloads into known parameters or manually building payload lists for Intruder. PathWalker is designed for a different workflow: it starts from Burp's sitemap, walks every directory level in each selected URL path, and sends traversal payloads from each discovered path context. This helps find routing and rewrite-layer traversal issues that can be missed when only the final endpoint or visible GET parameters are tested.
+PathWalker automates sitemap-driven LFI and path traversal testing. It walks backwards from each directory level of discovered URL paths and injects traversal payloads from every path context, rather than only testing the final endpoint. This helps find routing and rewrite-layer traversal issues that can be missed when only the final endpoint or visible GET parameters are tested. It also tests GET parameters with direct file and traversal payload variants.
 
-PathWalker also tests GET parameters, auto-loads recent cookies and JWT Bearer tokens for the selected host, and reports high-confidence findings back into Burp's sitemap.
+PathWalker can load target URLs from Burp's sitemap. To support authenticated testing, it allows you to reuse session cookies and JWT Bearer tokens already observed in Burp Proxy history. The extension also reports high-confidence findings back into Burp's Target sitemap.
+
+---
 
 ## Features
 
@@ -19,6 +35,8 @@ PathWalker also tests GET parameters, auto-loads recent cookies and JWT Bearer t
 * **Burp integration:** Uses Burp's networking APIs and registers confirmed findings as Burp sitemap issues.
 * **Large-project safeguards:** Caps sitemap, proxy-history, loaded URL, scan target, response, and log processing to keep Burp responsive.
 
+---
+
 ## Usage
 
 1. Browse the target application through Burp so the Target sitemap and Proxy history contain useful entries.
@@ -28,6 +46,8 @@ PathWalker also tests GET parameters, auto-loads recent cookies and JWT Bearer t
 5. Review the loaded URLs and session values. Remove anything you do not want to scan.
 6. Click **Start Scan**.
 7. Review hits in the PathWalker results table and in Burp's Target sitemap issues.
+
+---
 
 ## Scope And Safety
 
@@ -42,28 +62,32 @@ The scanner is sitemap-driven and currently focuses on:
 
 It does not currently test POST bodies, JSON/XML parameters, multipart uploads, WebSockets, or arbitrary custom file lists.
 
+---
+
 ## False Positives And Limitations
 
 PathWalker only reports findings when response content matches high-confidence local file signatures. This keeps false positives low, but it can miss vulnerabilities that return different files, partial file contents, transformed content, or access-controlled responses.
 
 For very large Burp projects, PathWalker uses caps when reading sitemap and proxy-history data. If a target host has more entries than the caps allow, load a narrower Burp project or remove unrelated sitemap/history entries before scanning.
 
+---
+
 ## Build
 
 Windows Powershell:
-```
+
+```powershell
 .\gradlew.bat jar
 ```
 
 Linux/macOS:
-```
-.\gradlew jar
+
+```sh
+./gradlew jar
 ```
 
 The extension JAR is created in `build/libs/pathwalker-1.3.0.jar`.
 
-## Load In Burp
+---
 
-Use **Extensions > Installed > Add** and select the built JAR.
 
-The original Jython prototype is retained as `pathwalker.py`; the BApp-ready Montoya implementation is in `src/main/java/com/pathwalker/PathWalkerExtension.java`.
