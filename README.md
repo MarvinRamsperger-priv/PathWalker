@@ -3,7 +3,7 @@
 # PathWalker LFI Scanner
 
 ![Java 17](https://img.shields.io/badge/Java-17-007396)
-![Burp Montoya](https://img.shields.io/badge/Burp%20Montoya-Extension-ff6633)
+![Burp Montoya](https://img.shields.io/badge/Burp%20Montoya-2026.4-ff6633)
 ![Version](https://img.shields.io/badge/version-1.3.0-blue)
 
 </div>
