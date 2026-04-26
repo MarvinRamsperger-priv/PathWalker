@@ -50,8 +50,14 @@ For very large Burp projects, PathWalker uses caps when reading sitemap and prox
 
 ## Build
 
-```powershell
-gradle jar
+Windows Powershell:
+```
+.\gradlew.bat jar
+```
+
+Linux/macOS:
+```
+.\gradlew jar
 ```
 
 The extension JAR is created in `build/libs/pathwalker-1.3.0.jar`.
